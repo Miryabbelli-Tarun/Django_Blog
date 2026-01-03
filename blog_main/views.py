@@ -29,8 +29,7 @@ def register(request):
         form=RegisterForm(request.POST)
         print(form)
         if form.is_valid():
-            user=User(**form.cleaned_data)
-            user.save()
+            form.save()
             return redirect('register')
     form=RegisterForm()
     context={
@@ -48,7 +47,7 @@ def login_view(request):
             user=authenticate(username=username,password=password)
             if user is not None:
                 login(request,user)
-                return redirect('dashboard')
+                return redirect('home')
 
     form=AuthenticationForm()
     context={
