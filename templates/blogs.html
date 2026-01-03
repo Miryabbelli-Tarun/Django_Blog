@@ -24,6 +24,35 @@
 
                 </section>
             </article>
+            <div>
+                <h3>Comments ({% if comments %}{{comment_count}}{% else %} 0{% endif %})</h3>
+                {% if comments %}
+                {% for comment in comments%}
+                <div class="card mt-1">
+                    <div class="card-body">
+                        <p class="card-text mb-0">{{comment}}</p>
+                        <span>
+                            <small>By {{comment.user}}</small>
+                            <small>|{{comment.created_at |timesince }} ago</small>
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>No comments Yet.</p>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <div class="form-group mt-4">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <textarea name="comment" class="form-control mb-2" placeholder="Enter comment"></textarea>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                {% else %}
+                <p>please <span><a href="{% url 'login' %}">Login</a></span> to comment</p>
+                {% endif %}
+            </div>
         </div>
         <!-- Side widgets-->
         <div class="col-lg-4">
